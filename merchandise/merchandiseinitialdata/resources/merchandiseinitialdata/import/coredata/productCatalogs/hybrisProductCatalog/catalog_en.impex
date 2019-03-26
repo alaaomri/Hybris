@@ -1,0 +1,13 @@
+#
+# Import the Product Catalog and Classification Catalog
+#
+
+# Language
+$lang=en
+
+# Create Catalog
+$lang=en
+$productCatalog=hybrisProductCatalog
+ 
+UPDATE Catalog;id[unique=true];name[lang=$lang]
+;$productCatalog;"hybris Product Catalog"

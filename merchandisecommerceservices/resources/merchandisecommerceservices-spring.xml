@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. This software is the confidential and proprietary information 
+	of hybris ("Confidential Information"). You shall not disclose such Confidential Information and shall use it only in accordance with 
+	the terms of the license agreement you entered into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="customDefaultProductDao" class="de.hybris.merchandise.dao.impl.CustomDefaultProductDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+
+	</bean>
+	
+	<bean id="rangedAvgCustomerRatingProvider"
+		class="de.hybris.merchandise.search.providers.impl.MerchandiseProductReviewAverageRatingValueProvider"
+		parent="productReviewAverageRatingValueProvider" />
+
+	<bean id="customProductService" class="de.hybris.merchandise.custom.service.impl.CustomDefaultProductService">
+		<property name="customDefaultProductDao" ref="customDefaultProductDao" />	
+	</bean>
+
+	<bean id="bestSaleProvider" class="de.hybris.merchandise.search.providers.impl.MerchandiseProductBestSaleProvider"
+		parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider" />
+		<property name="customProductService" ref="customProductService" />
+	</bean>
+
+	
+
+
+	<alias alias="customCustomerAccountService" name="customDefaultCustomerAccountService" />
+	<bean id="customDefaultCustomerAccountService"
+		class="de.hybris.merchandise.custom.service.impl.CustomDefaultCustomerAccountService">
+		<property name="userService" ref="userService" />
+		<property name="customerAccountService" ref="customerAccountService" />
+		<property name="paymentService" ref="paymentService" />
+		<property name="modelService" ref="modelService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="i18nService" ref="i18nService" />
+		<property name="passwordEncoderService" ref="passwordEncoderService" />
+		<property name="secureTokenService" ref="secureTokenService" />
+		<property name="tokenValiditySeconds" value="1800" />
+		<property name="customerAccountDao" ref="customerAccountDao" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="eventService" ref="eventService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="customerEmailResolutionService" ref="customerEmailResolutionService" />
+		<property name="passwordEncoding" value="md5" />
+		<property name="typeService" ref="typeService" />
+		<property name="customerNameStrategy" ref="defaultCustomerNameStrategy" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+
+
+
+</beans>
